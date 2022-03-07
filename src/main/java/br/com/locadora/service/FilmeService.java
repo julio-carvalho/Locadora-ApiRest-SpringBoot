@@ -53,4 +53,15 @@ public class FilmeService {
 		filmeUpdate.get().setAno(filme.getAno());
 	}
 	
+	public void updateDisponivelFalse(Filme filme) {
+		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
+		filmeUpdate.get().setDisponivel(false);
+		filmeRepository.save(filmeUpdate.get());
+	}
+	
+	public void updateDisponivelTrue(Filme filme) {
+		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
+		filmeUpdate.get().setDisponivel(true);
+		filmeRepository.save(filmeUpdate.get());
+	}
 }

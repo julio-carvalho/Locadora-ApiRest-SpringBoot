@@ -31,6 +31,10 @@ public class ClienteService {
 		return clienteRepository.findById(id);
 	}
 	
+	public Cliente findByCPF(String cpf) {
+		return clienteRepository.findByCpf(cpf);
+	}
+	
 	public void delete(Long id) {
 		clienteRepository.delete(this.getCliente(id));
 	}
