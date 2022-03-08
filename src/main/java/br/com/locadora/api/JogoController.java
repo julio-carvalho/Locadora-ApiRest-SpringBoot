@@ -19,64 +19,64 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.locadora.dto.ClienteDTO;
 import br.com.locadora.model.Cliente;
-import br.com.locadora.model.Filme;
-import br.com.locadora.repository.FilmeRepository;
+import br.com.locadora.model.Jogo;
+import br.com.locadora.repository.JogoRepository;
 import br.com.locadora.service.ClienteService;
-import br.com.locadora.service.FilmeService;
+import br.com.locadora.service.JogoService;
 
 @RestController
-@RequestMapping("api/filme")
-public class FilmeController {
+@RequestMapping("api/jogo")
+public class JogoController {
 	
 	@Autowired
-	private FilmeRepository filmeRepository;
+	private JogoRepository jogoRepository;
 	
 	@Autowired
-	private FilmeService filmeService;
+	private JogoService jogoService;
 	
 	@Autowired
 	private ClienteService clienteService;
 	
 	@GetMapping
-	public ResponseEntity<List<Filme>> listaFilmes() {
-		List<Filme> filmes = new ArrayList();
-		filmes = filmeService.buscarFilmes();
-		return ResponseEntity.ok().body(filmes);
+	public ResponseEntity<List<Jogo>> listaJogos() {
+		List<Jogo> jogos = new ArrayList();
+		jogos = jogoService.buscarJogos();
+		return ResponseEntity.ok().body(jogos);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Filme>> getFilmeById(@PathVariable Long id) {
-		Optional<Filme> filme = filmeService.findByIdFilme(id);
-		return ResponseEntity.ok().body(filme);
+	public ResponseEntity<Optional<Jogo>> getFilmeById(@PathVariable Long id) {
+		Optional<Jogo> jogo = jogoService.findByIdJogo(id);
+		return ResponseEntity.ok().body(jogo);
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<?> cadastraFilme(@RequestBody Filme filme) {
-		filmeService.createFilme(filme);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(filme.getId()).toUri();
+	public ResponseEntity<?> cadastraJogo(@RequestBody Jogo jogo) {
+		jogoService.createJogo(jogo);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(jogo.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@DeleteMapping("/excluir/{id}")
-	public ResponseEntity<?> deleteFilmeById(@PathVariable Long id) {
-		filmeService.delete(id);
+	public ResponseEntity<?> deleteJogoById(@PathVariable Long id) {
+		jogoService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<?> updateFilmeId(@RequestBody Filme filme, @PathVariable Long id) {
-		Filme filmeUpdate = filme;
-		filmeUpdate.setId(id);
-		filmeService.updateFilme(filmeUpdate);
+	public ResponseEntity<?> updateJogoId(@RequestBody Jogo jogo, @PathVariable Long id) {
+		Jogo jogoUpdate = jogo;
+		jogoUpdate.setId(id);
+		jogoService.updateJogo(jogoUpdate);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping("/alugar/{id}")
 	private ResponseEntity<?> alugaFilme(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
-		Optional<Filme> buscaFilmeId = filmeService.findByIdFilme(id);
+		Optional<Jogo> buscaJogoId = jogoService.findByIdJogo(id);
 		
-		if(!buscaFilmeId.get().isDisponivel()) {
+		if(!buscaJogoId.get().isDisponivel()) {
 			return ResponseEntity.notFound().build();
 		}
 		
@@ -87,19 +87,19 @@ public class FilmeController {
 		}
 		
 		
-		filmeService.updateDisponivelFalse(buscaFilmeId.get(), cliCpf.getId());
-		return ResponseEntity.ok().body(buscaFilmeId);
+		jogoService.updateDisponivelFalse(buscaJogoId.get(), cliCpf.getId());
+		return ResponseEntity.ok().body(buscaJogoId);
 	}
 	
 	@PostMapping("/devolver/{id}")
-	private ResponseEntity<?> devolveFilme(@PathVariable Long id) {
-		Optional<Filme> buscaFilmeId = filmeService.findByIdFilme(id);
+	private ResponseEntity<?> devolveJogo(@PathVariable Long id) {
+		Optional<Jogo> buscaJogoId = jogoService.findByIdJogo(id);
 		
-		if(buscaFilmeId.get().isDisponivel()) {
+		if(buscaJogoId.get().isDisponivel()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		filmeService.updateDisponivelTrue(buscaFilmeId.get());
-		return ResponseEntity.ok().body(buscaFilmeId);
+		jogoService.updateDisponivelTrue(buscaJogoId.get());
+		return ResponseEntity.ok().body(buscaJogoId);
 	}
 }

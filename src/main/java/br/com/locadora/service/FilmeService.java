@@ -17,6 +17,7 @@ public class FilmeService {
 	
 	public Filme createFilme(Filme filme) {
 		filme.setDisponivel(true);
+		filme.setIdCliente(null);
 		return filmeRepository.save(filme);
 	}
 	
@@ -28,7 +29,7 @@ public class FilmeService {
 		return filmeRepository.findAll();
 	}
 	
-	public Optional<Filme> findById(Long id) {
+	public Optional<Filme> findByIdFilme(Long id) {
 		return filmeRepository.findById(id);
 	}
 	
@@ -51,17 +52,22 @@ public class FilmeService {
 		filmeUpdate.get().setGenero(filme.getGenero());
 		filmeUpdate.get().setClassificacao(filme.getClassificacao());
 		filmeUpdate.get().setAno(filme.getAno());
+		filmeUpdate.get().setValor(filme.getValor());
 	}
 	
-	public void updateDisponivelFalse(Filme filme) {
+	//alugar filme
+	public void updateDisponivelFalse(Filme filme, Long idCliente) {
 		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
 		filmeUpdate.get().setDisponivel(false);
+		filmeUpdate.get().setIdCliente(idCliente);
 		filmeRepository.save(filmeUpdate.get());
 	}
 	
+	//devolver filme
 	public void updateDisponivelTrue(Filme filme) {
 		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
 		filmeUpdate.get().setDisponivel(true);
+		filmeUpdate.get().setIdCliente(null);
 		filmeRepository.save(filmeUpdate.get());
 	}
 }
