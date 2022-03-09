@@ -73,7 +73,7 @@ public class FilmeController {
 	}
 	
 	@PostMapping("/alugar/{id}")
-	private ResponseEntity<?> alugaFilme(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<?> alugaFilme(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
 		Optional<Filme> buscaFilmeId = filmeService.findByIdFilme(id);
 		
 		if(!buscaFilmeId.get().isDisponivel()) {
@@ -92,7 +92,7 @@ public class FilmeController {
 	}
 	
 	@PostMapping("/devolver/{id}")
-	private ResponseEntity<?> devolveFilme(@PathVariable Long id) {
+	public ResponseEntity<?> devolveFilme(@PathVariable Long id) {
 		Optional<Filme> buscaFilmeId = filmeService.findByIdFilme(id);
 		
 		if(buscaFilmeId.get().isDisponivel()) {
@@ -101,5 +101,31 @@ public class FilmeController {
 		
 		filmeService.updateDisponivelTrue(buscaFilmeId.get());
 		return ResponseEntity.ok().body(buscaFilmeId);
+	}
+	
+	//lista de filme que o cliente tem alugado
+	@PostMapping("/cliente/{id}")
+	public ResponseEntity<?> filmeClienteById(@PathVariable Long id) {
+		List<Filme> filmes = new ArrayList();
+		filmes = filmeService.buscaFilmeByIdCliente(id);
+		
+		
+		if(filmes == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok().body(filmes);
+	}
+	
+	//lista de jogos disponíveis
+	@GetMapping("/disponivel")
+	public ResponseEntity<?> filmesDisponiveis() {
+		List<Filme> filmes = new ArrayList();
+		filmes = filmeService.buscaFilmesDisponiveis();
+		
+		if(filmes == null)
+			return ResponseEntity.notFound().build();
+		
+		return ResponseEntity.ok().body(filmes);
 	}
 }

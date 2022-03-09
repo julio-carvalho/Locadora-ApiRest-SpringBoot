@@ -29,7 +29,10 @@ public class Jogo {
 	
 	@Column(name = "ds_ano")
 	private int ano;
-		
+	
+	@Column(name = "ds_plataforma")
+	private String plataforma;
+	
 	@Column(name = "ds_valor")
 	private double valor;
 	
@@ -42,16 +45,17 @@ public class Jogo {
 		super();
 	}
 
-	public Jogo(Long id, String nome, String genero, String classificacao, int ano, boolean disponivel, double valor, Long idCliente) {
+	public Jogo(Long id, String nome, String genero, String classificacao, int ano, String plataforma, double valor, Long idCliente, boolean disponivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.genero = genero;
 		this.classificacao = classificacao;
 		this.ano = ano;
-		this.disponivel = disponivel;
+		this.plataforma = plataforma;
 		this.valor = valor;
 		this.idCliente = idCliente;
+		this.disponivel = disponivel;
 	}
 
 	public Long getId() {
@@ -93,13 +97,13 @@ public class Jogo {
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
-
-	public boolean isDisponivel() {
-		return disponivel;
+	
+	public String getPlataforma() {
+		return plataforma;
 	}
 
-	public void setDisponivel(boolean disponivel) {
-		this.disponivel = disponivel;
+	public void setPlataforma(String plataforma) {
+		this.plataforma = plataforma;
 	}
 
 	public double getValor() {
@@ -116,5 +120,13 @@ public class Jogo {
 
 	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
+	}
+	
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 }

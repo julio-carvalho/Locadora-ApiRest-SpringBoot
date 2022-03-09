@@ -52,10 +52,11 @@ public class JogoService {
 		jogoUpdate.get().setGenero(jogo.getGenero());
 		jogoUpdate.get().setClassificacao(jogo.getClassificacao());
 		jogoUpdate.get().setAno(jogo.getAno());
+		jogoUpdate.get().setPlataforma(jogo.getPlataforma());
 		jogoUpdate.get().setValor(jogo.getValor());
 	}
 	
-	//alugar filme
+	//alugar jogo
 	public void updateDisponivelFalse(Jogo jogo, Long idCliente) {
 		Optional<Jogo> jogoUpdate = jogoRepository.findById(jogo.getId());
 		jogoUpdate.get().setDisponivel(false);
@@ -63,11 +64,23 @@ public class JogoService {
 		jogoRepository.save(jogoUpdate.get());
 	}
 	
-	//devolver filme
+	//devolver jogo
 	public void updateDisponivelTrue(Jogo jogo) {
 		Optional<Jogo> jogoUpdate = jogoRepository.findById(jogo.getId());
 		jogoUpdate.get().setDisponivel(true);
 		jogoUpdate.get().setIdCliente(null);
 		jogoRepository.save(jogoUpdate.get());
+	}
+	
+	//lista de filme que o cliente tem alugado
+	public List<Jogo> buscaJogoByIdCliente(Long id) {
+		List<Jogo> buscaJogo = jogoRepository.findByJogoId(id);
+		return buscaJogo;
+	}
+	
+	//lista de jogos disponíveis
+	public List<Jogo> buscaJogosDisponiveis() {
+		List<Jogo> buscaJogo = jogoRepository.findJogosDisponiveis();
+		return buscaJogo;
 	}
 }

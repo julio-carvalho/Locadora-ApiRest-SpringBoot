@@ -70,4 +70,16 @@ public class FilmeService {
 		filmeUpdate.get().setIdCliente(null);
 		filmeRepository.save(filmeUpdate.get());
 	}
+	
+	//lista de filme que o cliente tem alugado
+	public List<Filme> buscaFilmeByIdCliente(Long id) {
+		List<Filme> buscaFilme = filmeRepository.findByFilmeId(id);
+		return buscaFilme;
+	}
+	
+	//lista de jogos disponíveis
+	public List<Filme> buscaFilmesDisponiveis() {
+		List<Filme> buscaFilme = filmeRepository.findFilmesDisponiveis();
+		return buscaFilme;
+	}
 }

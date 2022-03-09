@@ -73,7 +73,7 @@ public class JogoController {
 	}
 	
 	@PostMapping("/alugar/{id}")
-	private ResponseEntity<?> alugaFilme(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<?> alugaFilme(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
 		Optional<Jogo> buscaJogoId = jogoService.findByIdJogo(id);
 		
 		if(!buscaJogoId.get().isDisponivel()) {
@@ -92,7 +92,7 @@ public class JogoController {
 	}
 	
 	@PostMapping("/devolver/{id}")
-	private ResponseEntity<?> devolveJogo(@PathVariable Long id) {
+	public ResponseEntity<?> devolveJogo(@PathVariable Long id) {
 		Optional<Jogo> buscaJogoId = jogoService.findByIdJogo(id);
 		
 		if(buscaJogoId.get().isDisponivel()) {
@@ -101,5 +101,31 @@ public class JogoController {
 		
 		jogoService.updateDisponivelTrue(buscaJogoId.get());
 		return ResponseEntity.ok().body(buscaJogoId);
+	}
+	
+	//lista de filme que o cliente tem alugado
+	@PostMapping("/cliente/{id}")
+	public ResponseEntity<?> jogoClienteById(@PathVariable Long id) {
+		List<Jogo> jogos = new ArrayList();
+		jogos = jogoService.buscaJogoByIdCliente(id);
+		
+		
+		if(jogos == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok().body(jogos);
+	}
+	
+	//lista de jogos disponíveis
+	@GetMapping("/disponivel")
+	public ResponseEntity<?> jogosDisponiveis() {
+		List<Jogo> jogos = new ArrayList();
+		jogos = jogoService.buscaJogosDisponiveis();
+		
+		if(jogos == null)
+			return ResponseEntity.notFound().build();
+		
+		return ResponseEntity.ok().body(jogos);
 	}
 }

@@ -42,16 +42,16 @@ public class Filme {
 		super();
 	}
 
-	public Filme(Long id, String nome, String genero, String classificacao, int ano, boolean disponivel, double valor, Long idCliente) {
+	public Filme(Long id, String nome, String genero, String classificacao, int ano, double valor, Long idCliente, boolean disponivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.genero = genero;
 		this.classificacao = classificacao;
 		this.ano = ano;
-		this.disponivel = disponivel;
 		this.valor = valor;
 		this.idCliente = idCliente;
+		this.disponivel = disponivel;
 	}
 
 	public Long getId() {
@@ -93,14 +93,6 @@ public class Filme {
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
-
-	public boolean isDisponivel() {
-		return disponivel;
-	}
-
-	public void setDisponivel(boolean disponivel) {
-		this.disponivel = disponivel;
-	}
 	
 	public double getValor() {
 		return valor;
@@ -116,5 +108,13 @@ public class Filme {
 
 	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
+	}
+	
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 }
