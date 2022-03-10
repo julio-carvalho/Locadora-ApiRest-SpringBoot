@@ -1,5 +1,7 @@
 package br.com.locadora.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +63,9 @@ public class JogoService {
 		Optional<Jogo> jogoUpdate = jogoRepository.findById(jogo.getId());
 		jogoUpdate.get().setDisponivel(false);
 		jogoUpdate.get().setIdCliente(idCliente);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String dataAtual = sdf.format(new Date());
+		jogoUpdate.get().setDataAluguel(dataAtual);
 		jogoRepository.save(jogoUpdate.get());
 	}
 	
@@ -69,6 +74,7 @@ public class JogoService {
 		Optional<Jogo> jogoUpdate = jogoRepository.findById(jogo.getId());
 		jogoUpdate.get().setDisponivel(true);
 		jogoUpdate.get().setIdCliente(null);
+		jogoUpdate.get().setDataAluguel(null);
 		jogoRepository.save(jogoUpdate.get());
 	}
 	

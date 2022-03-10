@@ -1,5 +1,7 @@
 package br.com.locadora.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +62,9 @@ public class FilmeService {
 		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
 		filmeUpdate.get().setDisponivel(false);
 		filmeUpdate.get().setIdCliente(idCliente);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String dataAtual = sdf.format(new Date());
+		filmeUpdate.get().setDataAluguel(dataAtual);
 		filmeRepository.save(filmeUpdate.get());
 	}
 	
@@ -68,6 +73,7 @@ public class FilmeService {
 		Optional<Filme> filmeUpdate = filmeRepository.findById(filme.getId());
 		filmeUpdate.get().setDisponivel(true);
 		filmeUpdate.get().setIdCliente(null);
+		filmeUpdate.get().setDataAluguel(null);
 		filmeRepository.save(filmeUpdate.get());
 	}
 	

@@ -39,13 +39,16 @@ public class Jogo {
 	@Column(name = "id_cliente")
 	private Long idCliente;
 	
+	@Column(name="dt_aluguel")
+	private String dataAluguel;
+	
 	private boolean disponivel;
 
 	public Jogo() {
 		super();
 	}
 
-	public Jogo(Long id, String nome, String genero, String classificacao, int ano, String plataforma, double valor, Long idCliente, boolean disponivel) {
+	public Jogo(Long id, String nome, String genero, String classificacao, int ano, String plataforma, double valor, Long idCliente, String dataAluguel, boolean disponivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -55,6 +58,7 @@ public class Jogo {
 		this.plataforma = plataforma;
 		this.valor = valor;
 		this.idCliente = idCliente;
+		this.dataAluguel = dataAluguel;
 		this.disponivel = disponivel;
 	}
 
@@ -122,6 +126,14 @@ public class Jogo {
 		this.idCliente = idCliente;
 	}
 	
+	public String getDataAluguel() {
+		return dataAluguel;
+	}
+
+	public void setDataAluguel(String dataAluguel) {
+		this.dataAluguel = dataAluguel;
+	}
+
 	public boolean isDisponivel() {
 		return disponivel;
 	}
